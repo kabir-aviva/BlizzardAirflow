@@ -1,0 +1,3 @@
+# Proveedor oficial para interactuar con Google Cloud,
+# Incluye el operador para invocar Cloud Functions.
+apache-airflow-providers-google
