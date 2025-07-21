@@ -1,0 +1,1 @@
+postgresql://postgres:#n5N^9LBj3C^qmB$SwZTPk@10.224.240.3:5432/postgres

@@ -1,0 +1,47 @@
+# =================================================================
+# values.yaml - Versión Final y Corregida
+# =================================================================
+
+executor: KubernetesExecutor
+
+postgresql:
+  enabled: false
+
+# --- INICIO DEL CAMBIO ---
+# Reemplazamos toda la sección 'metadataConnection' por una sola línea
+# que apunta al secreto de Kubernetes que contiene la URL de conexión.
+data:
+  metadataSecretName: "airflow-metadata-secret"
+# --- FIN DEL CAMBIO ---
+
+images:
+  airflow:
+    repository: "us-central1-docker.pkg.dev/data-engineerig-analitycs-dev/airflow-images/airflow-runner"
+    tag: "latest"
+    pullPolicy: Always
+
+dags:
+  # Habilitamos la persistencia de los DAGs
+  persistence:
+    enabled: true
+    # Usamos el PersistentVolumeClaim que creamos, el cual apunta a tu bucket de GCS
+    existingClaim: "airflow-dags-pvc"
+  
+  # Nos aseguramos que git-sync está deshabilitado
+  gitSync:
+    enabled: false
+  
+  # Le decimos a Airflow que busque los DAGs en la subcarpeta 'dags/' dentro del volumen montado
+  mountPath: "/opt/airflow/dags/dags" 
+
+webserver:
+  enabled: true
+
+apiServer:
+  service:
+    type: LoadBalancer
+
+# Para que Airflow busque los dags en la subcarpeta correcta dentro del volumen
+config:
+  core:
+    dags_folder: '/opt/airflow/dags/dags'
