@@ -1,0 +1,18 @@
+executor: KubernetesExecutor
+
+postgresql:
+  enabled: false
+
+data:
+  metadataSecretName: "airflow-metadata-secret"
+
+images:
+  airflow:
+    repository: "apache/airflow"
+    tag: "2.9.2-python3.10"
+    pullPolicy: IfNotPresent
+
+dags:
+  persistence:
+    enabled: true
+    existingClaim: "airflow-dags-pvc"

@@ -1,5 +1,5 @@
 # =================================================================
-# values.yaml - PRUEBA CON IMAGEN OFICIAL
+# values.yaml - Versión Final con Tag
 # =================================================================
 
 executor: KubernetesExecutor
@@ -11,12 +11,14 @@ data:
   metadataSecretName: "airflow-metadata-secret"
 
 # --- CAMBIO IMPORTANTE ---
-# Apuntamos a la imagen oficial de Airflow en lugar de la tuya
+# Volvemos a usar el 'tag', que ya verificamos que funciona.
 images:
   airflow:
-    repository: "apache/airflow"
-    tag: "2.9.2-python3.10"
-    pullPolicy: IfNotPresent
+    repository: "us-central1-docker.pkg.dev/data-engineerig-analitycs-dev/airflow-images/airflow-runner"
+    tag: "latest"
+    # Borramos o comentamos la línea del digest
+    # digest: "sha256:..."
+    pullPolicy: Always
 
 dags:
   persistence:

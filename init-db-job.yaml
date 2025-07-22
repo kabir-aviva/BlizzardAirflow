@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: airflow-db-init
+  namespace: airflow
+spec:
+  template:
+    spec:
+      containers:
+      - name: airflow-db-init-container
+        image: us-central1-docker.pkg.dev/data-engineerig-analitycs-dev/airflow-images/airflow-runner:latest
+        command: ["airflow", "db", "init"]
+        env:
+        - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
+          valueFrom:
+            secretKeyRef:
+              name: airflow-metadata-secret
+              key: connection
+      restartPolicy: Never
+  backoffLimit: 4
