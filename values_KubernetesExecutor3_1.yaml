@@ -1,16 +1,11 @@
-#Por temas de compatibilidad 
-#C:\AvivaDBT\BlizzardAirflow>kubectl port-forward svc/airflow-web 8080:8080 -n airflow
-#Error from server (NotFound): services "airflow-web" not found
-#No esta disponible en la version Airflow 2.9.2 y Python 3.10.
+# values.yaml (Versión final con Imagen, Recursos, Git-Sync y Logging Remoto)
 
-# Le decimos a Helm que use nuestra imagen de Artifact Registry
 images:
   airflow:
     repository: "us-central1-docker.pkg.dev/data-engineerig-analitycs-dev/airflow-images/airflow-runner"
     tag: "latest"
-    pullPolicy: Always # Forzamos que siempre descargue la última versión
+    pullPolicy: Always
 
-# El resto de tu configuración que ya funcionó
 executor: KubernetesExecutor
 
 postgresql:
@@ -24,6 +19,16 @@ data:
     host: 10.224.240.3
     port: 5432
     db: postgres
+
+# -------------------------------------------------------------------------
+# SECCIÓN DE LOGGING REMOTO A GCS
+# -------------------------------------------------------------------------
+config:
+  logging:
+    remote_logging: "True"
+    remote_base_log_folder: "gs://blizzard-airflow-artifacts/logs"
+    remote_log_conn_id: "google_cloud_default"
+# -------------------------------------------------------------------------
 
 webserver:
   enabled: true
@@ -64,8 +69,14 @@ dagProcessor:
       cpu: 250m
       memory: 512Mi
 
+# ---------------------------------------------------------------------------------
+# SECCIÓN DE GIT-SYNC PARA LEER DAGS DESDE GITHUB
+# ---------------------------------------------------------------------------------
 dags:
   gitSync:
-    enabled: false
+    enabled: true
+    repo: "https://github.com/EdgarMendezLomas/BlizzardAirflow.git"
+    branch: "main"
+    subPath: "dags"
   persistence:
     enabled: false

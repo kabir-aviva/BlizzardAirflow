@@ -1,4 +1,4 @@
-#Esta version ya se ejecuta correcamente
+#Esta version ya se ejecuta correcamente, utilila la version de helm repo add apache-airflow https://airflow.apache.org
 
 executor: KubernetesExecutor
 

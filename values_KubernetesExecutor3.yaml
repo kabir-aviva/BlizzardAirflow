@@ -1,4 +1,4 @@
-# values.yaml (Versión final con imagen personalizada y recursos)
+# values.yaml (Versión final con imagen personalizada, recursos y git-sync)
 
 images:
   airflow:
@@ -59,8 +59,15 @@ dagProcessor:
       cpu: 250m
       memory: 512Mi
 
+# ---------------------------------------------------------------------------------
+# SECCIÓN MODIFICADA: Activamos git-sync para leer los DAGs desde GitHub
+# ---------------------------------------------------------------------------------
 dags:
   gitSync:
-    enabled: false
+    enabled: true
+    repo: "https://github.com/EdgarMendezLomas/BlizzardAirflow.git"
+    branch: "main"
+    # La carpeta dentro de tu repositorio donde están los DAGs
+    subPath: "dags"
   persistence:
     enabled: false
