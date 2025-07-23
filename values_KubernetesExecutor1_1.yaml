@@ -1,0 +1,65 @@
+#Esta version ya se ejecuta correcamente
+
+executor: KubernetesExecutor
+
+postgresql:
+  enabled: false
+
+data:
+  metadataConnection:
+    user: postgres
+    pass: "#n5N^9LBj3C^qmB$SwZTPk"
+    protocol: postgresql
+    host: 10.224.240.3
+    port: 5432
+    db: postgres
+
+webserver:
+  enabled: true
+  service:
+    type: LoadBalancer
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+scheduler:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# El job que crea el usuario inicial de Airflow
+createUserJob:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# El job que ejecuta las migraciones de la base de datos
+# La clave correcta es 'migrateDatabaseJob'
+migrateDatabaseJob:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# El componente triggerer para tareas deferrables
+triggerer:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# El procesador de DAGs
+dagProcessor:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+dags:
+  gitSync:
+    enabled: false
+  persistence:
+    enabled: false

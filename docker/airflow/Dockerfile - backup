@@ -1,5 +1,5 @@
-# 1. Usar la imagen base con Airflow 3.0.2 y Python 3.12.
-FROM apache/airflow:3.0.2-python3.12
+# 1. Usar la imagen base con Airflow 2.9.2 y Python 3.10.
+FROM apache/airflow:2.9.2-python3.10
 
 # 2. Asegurarnos de operar como el usuario de bajos privilegios 'airflow'.
 USER airflow

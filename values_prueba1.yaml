@@ -1,0 +1,42 @@
+executor: CeleryExecutor
+
+airflow:
+  image:
+    tag: "2.9.1"
+
+createUserJob:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+web:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+scheduler:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+workers:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+redis:
+  resources:
+    requests:
+      memory: 512Mi
+
+postgresql:
+  resources:
+    requests:
+      memory: 512Mi
+
+persistence:
+  enabled: false

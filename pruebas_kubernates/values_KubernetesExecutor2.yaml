@@ -1,0 +1,34 @@
+# values.yaml (Versión final con imagen personalizada)
+
+# Le decimos a Helm que use nuestra imagen de Artifact Registry
+images:
+  airflow:
+    repository: "us-central1-docker.pkg.dev/data-engineerig-analitycs-dev/airflow-images/airflow-runner"
+    tag: "latest"
+    pullPolicy: Always # Forzamos que siempre descargue la última versión
+
+# El resto de tu configuración probada
+executor: KubernetesExecutor
+
+postgresql:
+  enabled: false
+
+data:
+  metadataConnection:
+    user: postgres
+    pass: "#n5N^9LBj3C^qmB$SwZTPk"
+    protocol: postgresql
+    host: 10.224.240.3
+    port: 5432
+    db: postgres
+
+webserver:
+  enabled: true
+  service:
+    type: LoadBalancer
+
+dags:
+  gitSync:
+    enabled: false
+  persistence:
+    enabled: false

@@ -1,0 +1,45 @@
+executor: KubernetesExecutor
+
+postgresql:
+  enabled: false
+
+pgbouncer:
+  enabled: false
+
+data:
+  metadataSecretName: ""
+  metadataConnection:
+    host: 10.224.240.3
+    user: airflow_user
+    password: "#n5N^9LBj3C^qmB$SwZTPk"
+    port: 5432
+    db: airflow_db
+
+images:
+  airflow:
+    repository: "apache/airflow"
+    tag: "2.9.2-python3.10"
+    pullPolicy: IfNotPresent
+
+dags:
+  persistence:
+    enabled: false
+
+logs:
+  persistence:
+    enabled: false
+
+webserver:
+  enabled: true
+scheduler:
+  enabled: true
+apiServer:
+  enabled: true
+flower:
+  enabled: false
+
+# --- CAMBIO IMPORTANTE ---
+# Configurar la cadena de conexión de la base de datos directamente
+env:
+  - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
+    value: "postgresql+psycopg2://airflow_user:#n5N^9LBj3C^qmB$SwZTPk@10.224.240.3:5432/airflow_db"

@@ -1,0 +1,66 @@
+# values.yaml (Versión final con imagen personalizada y recursos)
+
+images:
+  airflow:
+    repository: "us-central1-docker.pkg.dev/data-engineerig-analitycs-dev/airflow-images/airflow-runner"
+    tag: "latest"
+    pullPolicy: Always
+
+executor: KubernetesExecutor
+
+postgresql:
+  enabled: false
+
+data:
+  metadataConnection:
+    user: postgres
+    pass: "#n5N^9LBj3C^qmB$SwZTPk"
+    protocol: postgresql
+    host: 10.224.240.3
+    port: 5432
+    db: postgres
+
+webserver:
+  enabled: true
+  service:
+    type: LoadBalancer
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+scheduler:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+createUserJob:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+migrateDatabaseJob:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+triggerer:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+dagProcessor:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+dags:
+  gitSync:
+    enabled: false
+  persistence:
+    enabled: false

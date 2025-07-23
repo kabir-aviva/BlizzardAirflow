@@ -1,0 +1,41 @@
+executor: KubernetesExecutor
+
+# Deshabilitar el PostgreSQL interno, ya que usaremos uno externo
+postgresql:
+  enabled: false
+
+# Configurar la conexión a la base de datos externa
+data:
+  metadataSecretName: "" # Deshabilita el uso del secreto
+  metadataConnection:
+    host: 10.224.240.3
+    user: airflow_user
+    password: "#n5N^9LBj3C^qmB$SwZTPk"
+    port: 5432
+    db: airflow_db
+
+# Usar la imagen oficial y la versión que nos diste
+images:
+  airflow:
+    repository: "apache/airflow"
+    tag: "2.9.2-python3.10"
+    pullPolicy: IfNotPresent
+
+# Usar almacenamiento temporal para los DAGs y logs para simplificar
+dags:
+  persistence:
+    enabled: false
+
+logs:
+  persistence:
+    enabled: false
+
+# Habilitar los componentes básicos de Airflow
+webserver:
+  enabled: true
+
+scheduler:
+  enabled: true
+
+apiServer:
+  enabled: true

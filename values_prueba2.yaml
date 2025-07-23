@@ -1,0 +1,63 @@
+# values_reto.yaml (Versión completa y corregida)
+
+# 1. Usamos CeleryExecutor, que requiere Redis.
+executor: CeleryExecutor
+
+# 2. Deshabilitamos la base de datos interna.
+postgresql:
+  enabled: false
+
+# 3. Inyectamos las variables de configuración directamente.
+#    Esta es la estructura correcta que usa el archivo oficial.
+config:
+  core:
+    sql_alchemy_conn: "postgresql+psycopg2://postgres:%23n5N%5E9LBj3C%5EqmB%24SwZTPk@10.224.240.3:5432/postgres"
+  celery:
+    broker_url: "redis://airflow-redis:6379/0"
+    result_backend: "db+postgresql://postgres:%23n5N%5E9LBj3C%5EqmB%24SwZTPk@10.224.240.3:5432/postgres"
+
+# 4. Habilitamos y exponemos el Webserver.
+webserver:
+  enabled: true
+  service:
+    type: LoadBalancer
+  # Asignamos los recursos que querías
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# 5. Configuramos los recursos para el Scheduler.
+scheduler:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# 6. Configuramos los recursos para los Workers de Celery.
+workers:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# 7. Configuramos los recursos para el job que crea el usuario.
+createUserJob:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# 8. Habilitamos Redis y le asignamos recursos.
+redis:
+  enabled: true
+  resources:
+    requests:
+      memory: 512Mi
+
+# 9. Deshabilitamos la sincronización de DAGs por ahora.
+dags:
+  gitSync:
+    enabled: false
+  persistence:
+    enabled: false

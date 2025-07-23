@@ -1,0 +1,32 @@
+# values.yaml (Versión final y correcta)
+
+# 1. Definimos el ejecutor que queremos.
+executor: KubernetesExecutor
+
+# 2. Deshabilitamos la base de datos interna de PostgreSQL.
+postgresql:
+  enabled: false
+
+# 3. Configuramos nuestra base de datos externa de Cloud SQL.
+#    Esta es la estructura correcta según tu archivo oficial.
+data:
+  metadataConnection:
+    user: postgres
+    pass: "#n5N^9LBj3C^qmB$SwZTPk"
+    protocol: postgresql
+    host: 10.224.240.3
+    port: 5432
+    db: postgres
+
+# 4. Habilitamos y exponemos el Webserver con una IP pública.
+webserver:
+  enabled: true
+  service:
+    type: LoadBalancer
+
+# 5. Deshabilitamos la sincronización de DAGs por Git y por Volumen Persistente.
+dags:
+  gitSync:
+    enabled: false
+  persistence:
+    enabled: false
