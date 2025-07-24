@@ -16,5 +16,5 @@ for KSA in $(kubectl get serviceaccounts -n $NAMESPACE -o jsonpath="{.items[*].m
   kubectl annotate serviceaccount "$KSA" \
     --namespace "$NAMESPACE" \
     iam.gke.io/gcp-service-account="$GSA" \
-    --overwrite
+    --overwrite 
 done
