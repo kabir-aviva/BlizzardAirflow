@@ -1,0 +1,82 @@
+# Se intenta reducir el tiempo que demora en ejecutar el DAG
+
+images:
+  airflow:
+    repository: "us-central1-docker.pkg.dev/data-engineerig-analitycs-dev/airflow-images/airflow-runner"
+    tag: "latest"
+    pullPolicy: IfNotPresent
+
+executor: KubernetesExecutor
+
+postgresql:
+  enabled: false
+
+data:
+  metadataConnection:
+    user: postgres
+    pass: "#n5N^9LBj3C^qmB$SwZTPk"
+    protocol: postgresql
+    host: 10.224.240.3
+    port: 5432
+    db: postgres
+
+# -------------------------------------------------------------------------
+# SECCIÓN DE LOGGING REMOTO A GCS
+# -------------------------------------------------------------------------
+config:
+  logging:
+    remote_logging: "True"
+    remote_base_log_folder: "gs://blizzard-airflow-artifacts/logs"
+    remote_log_conn_id: "google_cloud_default"
+# -------------------------------------------------------------------------
+
+webserver:
+  enabled: true
+  service:
+    type: LoadBalancer
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+scheduler:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+createUserJob:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+migrateDatabaseJob:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+triggerer:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+dagProcessor:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# ---------------------------------------------------------------------------------
+# SECCIÓN DE GIT-SYNC PARA LEER DAGS DESDE GITHUB
+# ---------------------------------------------------------------------------------
+dags:
+  gitSync:
+    enabled: true
+    repo: "https://github.com/EdgarMendezLomas/BlizzardAirflow.git"
+    branch: "main"
+    subPath: "dags"
+  persistence:
+    enabled: false
