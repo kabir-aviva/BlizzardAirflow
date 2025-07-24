@@ -22,4 +22,4 @@ USER airflow
 COPY requirements.txt .
 
 # 6. Instalar las dependencias de Python.
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt 
